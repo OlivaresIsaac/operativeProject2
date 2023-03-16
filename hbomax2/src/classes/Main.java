@@ -5,6 +5,8 @@
  */
 package classes;
 
+import ui.GlobalUI;
+
 /**
  *
  * @author isaac
@@ -16,8 +18,7 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-
-        
+         GlobalUI.openMainPage();
         
     }
     
