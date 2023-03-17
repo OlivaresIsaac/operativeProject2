@@ -55,7 +55,7 @@ public class MainPage extends javax.swing.JFrame {
         fightPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/vs.png"))); // NOI18N
-        fightPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, -1, -1));
+        fightPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, -1, -1));
 
         jPanel1.add(fightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 430, 340));
 
