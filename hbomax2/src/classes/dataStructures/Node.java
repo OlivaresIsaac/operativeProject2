@@ -5,24 +5,26 @@
  */
 package classes.dataStructures;
 
+import classes.Chapter;
+
 /**
  *
  * @author isaac
  */
 public class Node {
-    private Object element;
+    private Chapter element;
     private Node next;
 
-    public Node(Object element) {
+    public Node(Chapter element) {
         this.element = element;
         this.next = null;
     }
 
-    public Object getElement() {
+    public Chapter getElement() {
         return element;
     }
 
-    public void setElement(Object element) {
+    public void setElement(Chapter element) {
         this.element = element;
     }
 

@@ -5,6 +5,8 @@
  */
 package classes.dataStructures;
 
+import classes.Chapter;
+
 /**
  *
  * @author isaac
@@ -21,7 +23,7 @@ public class Queue {
         this.length = 0;
     }
 
-    public void enqueue(Object element) {
+    public void enqueue(Chapter element) {
         Node node = new Node(element);
         if (isEmpty()) {
             setFirst(node);
@@ -52,13 +54,13 @@ public class Queue {
         }
     }
     
-    public Object dispatch(){
-        Object element = process();
+    public Chapter dispatch(){
+        Chapter element = process();
         dequeue();
         return element;
     }
     
-    public Object process(){
+    public Chapter process(){
         return getFirst().getElement();
     }
 
