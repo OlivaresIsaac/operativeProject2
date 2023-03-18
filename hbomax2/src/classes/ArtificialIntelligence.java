@@ -5,6 +5,7 @@
  */
 package classes;
 
+import classes.dataStructures.Queue;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,18 +16,20 @@ import java.util.logging.Logger;
  */
 public class ArtificialIntelligence extends Thread {
 
-    final int runTime;
-    final Chapter chapterRm;
-    final Chapter chapterTlou;
+    final Administrator administrator;
+
+    int runTime;
+
+    Chapter chapterRm;
+    Chapter chapterTlou;
 
     final Random r = new Random();
 
-    public ArtificialIntelligence(Chapter chapterRm, Chapter chapterTlou) {
+    public ArtificialIntelligence(Administrator administrator) {
+        this.administrator = administrator;
+
         int runTimeSeconds = 6 + 0 + 9 + 1 + 10;
-        
         this.runTime = runTimeSeconds * 1000;
-        this.chapterRm = chapterRm;
-        this.chapterTlou = chapterTlou;
     }
 
     @Override
@@ -36,11 +39,11 @@ public class ArtificialIntelligence extends Thread {
                 int result = r.nextInt(100);
 
                 if (result < 40) { // 40%
-                    // do something
+                    // Determinar un ganador del combate de series
                 } else if (result < 67) { // 27%
-                    // do something
+                    this.administrator.returnChaptersToQueue(this.chapterRm, this.chapterTlou);
                 } else { // 33%
-                    // do something
+                    // Determinar que no puede haber un ganador
                 }
 
                 Thread.sleep(this.runTime);
@@ -48,6 +51,18 @@ public class ArtificialIntelligence extends Thread {
                 Logger.getLogger(ArtificialIntelligence.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    public void setChapterRm(Chapter chapterRm) {
+        this.chapterRm = chapterRm;
+    }
+
+    public void setChapterTlou(Chapter chapterTlou) {
+        this.chapterTlou = chapterTlou;
+    }
+
+    public void setRunTime(int runTime) {
+        this.runTime = runTime;
     }
 
 }
