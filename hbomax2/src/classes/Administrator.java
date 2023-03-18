@@ -89,12 +89,14 @@ public class Administrator {
             }
             
             Chapter chapterRm = this.getChapterFromQueues(this.queueRm1, this.queueRm2, this.queueRm3);
+            ia.setChapterRm(chapterRm);
             Chapter chapterTlou = this.getChapterFromQueues(this.queueTlou1, this.queueTlou2, this.queueTlou3);
+            ia.setChapterTlou(chapterTlou);
+            
+            ia.start();
             
             chapterRm.setCounter(0);
             chapterTlou.setCounter(0);
-            
-            ia.run(chapterRm, chapterTlou);
             
             // TODO: sum chapters counter +1
         }
@@ -119,9 +121,14 @@ public class Administrator {
         }
     }
     
-    //TODO
     private Chapter getChapterFromQueues(Queue queue1, Queue queue2, Queue queue3) {
-        //TODO: review all lists and return a chapter
+        if(!queue1.isEmpty()) {
+            return queue1.dispatch();
+        } else if (!queue2.isEmpty()) {
+            return queue2.dispatch();
+        } else if (!queue3.isEmpty()) {
+            return queue3.dispatch();
+        }
         return null;
     }
 

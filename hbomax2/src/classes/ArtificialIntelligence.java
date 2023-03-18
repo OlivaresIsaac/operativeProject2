@@ -17,6 +17,9 @@ import java.util.logging.Logger;
 public class ArtificialIntelligence extends Thread {
 
     final Administrator administrator;
+    
+    Chapter chapterRm;
+    Chapter chapterTlou;
 
     int runTime;
 
@@ -29,7 +32,8 @@ public class ArtificialIntelligence extends Thread {
         this.runTime = runTimeSeconds * 1000;
     }
 
-    public void run(Chapter chapterRm, Chapter chapterTlou) {
+    @Override
+    public void run() {
         try {
             int result = r.nextInt(100);
 
@@ -39,17 +43,17 @@ public class ArtificialIntelligence extends Thread {
                 // Random to find who won 50/50
                 int selector = r.nextInt(100);
                 if (selector <= 50) {
-                    winner = chapterRm;
+                    winner = this.chapterRm;
                 } else {
-                    winner = chapterTlou;
+                    winner = this.chapterTlou;
                 }
 
                 this.administrator.saveChapterToTxt(winner);
 
             } else if (result <= 67) { // 27%
-                this.administrator.returnChaptersToQueue(chapterRm, chapterTlou);
+                this.administrator.returnChaptersToQueue(this.chapterRm, this.chapterTlou);
             } else { // 33%
-                this.administrator.sendChaptersToBoosterQueue(chapterRm, chapterTlou);
+                this.administrator.sendChaptersToBoosterQueue(this.chapterRm, this.chapterTlou);
             }
             Thread.sleep(this.runTime);
         } catch (InterruptedException ex) {
@@ -60,5 +64,15 @@ public class ArtificialIntelligence extends Thread {
     public void setRunTime(int runTime) {
         this.runTime = runTime;
     }
+
+    public void setChapterRm(Chapter chapterRm) {
+        this.chapterRm = chapterRm;
+    }
+
+    public void setChapterTlou(Chapter chapterTlou) {
+        this.chapterTlou = chapterTlou;
+    }
+    
+    
 
 }
