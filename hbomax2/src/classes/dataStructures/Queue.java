@@ -99,4 +99,14 @@ public class Queue {
             pointer = pointer.getNext();
         }
     }
+    
+    public String buildStringForUiQueue(){
+        Node pointer = getLast();
+        String acc = "";
+        while (pointer != null) {
+            acc = " "+pointer.getElement().getPcb().getCompleteId() +" "+ acc;
+            pointer = pointer.getNext();
+        }
+        return acc;
+    }
 }

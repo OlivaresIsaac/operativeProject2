@@ -35,8 +35,16 @@ public class MainPage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         fightPanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        tlouBackground = new javax.swing.JLabel();
+        uiQueueTlou1 = new ui.UiQueue("Prioridad 1");
+        uiQueueRm1 = new ui.UiQueue("Prioridad 1");
+        uiQueueRm2 = new ui.UiQueue("Prioridad 2");
+        uiQueueRm3 = new ui.UiQueue("Prioridad 3");
+        uiQueueRmBooster = new ui.UiQueue("Cola de refuerzo");
         rmBackground = new javax.swing.JLabel();
+        uiQueueTlou2 = new ui.UiQueue("Prioridad 2");
+        uiQueueTlou3 = new ui.UiQueue("Prioridad 3");
+        uiQueueTlouBooster = new ui.UiQueue("Cola de refuerzo");
+        tlouBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -57,13 +65,21 @@ public class MainPage extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/vs.png"))); // NOI18N
         fightPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, -1, -1));
 
-        jPanel1.add(fightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 430, 340));
-
-        tlouBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/TLOUWallpaper.png"))); // NOI18N
-        jPanel1.add(tlouBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, -1, -1));
+        jPanel1.add(fightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 110, 430, 340));
+        jPanel1.add(uiQueueTlou1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 100, -1, -1));
+        jPanel1.add(uiQueueRm1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
+        jPanel1.add(uiQueueRm2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
+        jPanel1.add(uiQueueRm3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
+        jPanel1.add(uiQueueRmBooster, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, -1, -1));
 
         rmBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/rmWallpaper.png"))); // NOI18N
         jPanel1.add(rmBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(-540, 0, -1, -1));
+        jPanel1.add(uiQueueTlou2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 200, -1, -1));
+        jPanel1.add(uiQueueTlou3, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 300, -1, -1));
+        jPanel1.add(uiQueueTlouBooster, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 400, -1, -1));
+
+        tlouBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/TLOUWallpaper.png"))); // NOI18N
+        jPanel1.add(tlouBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1170, 560));
 
@@ -114,5 +130,49 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel rmBackground;
     private javax.swing.JLabel tlouBackground;
+    private ui.UiQueue uiQueueRm1;
+    private ui.UiQueue uiQueueRm2;
+    private ui.UiQueue uiQueueRm3;
+    private ui.UiQueue uiQueueRmBooster;
+    private ui.UiQueue uiQueueTlou1;
+    private ui.UiQueue uiQueueTlou2;
+    private ui.UiQueue uiQueueTlou3;
+    private ui.UiQueue uiQueueTlouBooster;
     // End of variables declaration//GEN-END:variables
+
+    public UiQueue getUiQueueRm1() {
+        return uiQueueRm1;
+    }
+
+    public UiQueue getUiQueueTlou1() {
+        return uiQueueTlou1;
+    }
+
+    public UiQueue getUiQueueRm2() {
+        return uiQueueRm2;
+    }
+
+    public UiQueue getUiQueueRm3() {
+        return uiQueueRm3;
+    }
+
+    public UiQueue getUiQueueRmBooster() {
+        return uiQueueRmBooster;
+    }
+
+    public UiQueue getUiQueueTlou2() {
+        return uiQueueTlou2;
+    }
+
+    public UiQueue getUiQueueTlou3() {
+        return uiQueueTlou3;
+    }
+
+    public UiQueue getUiQueueTlouBooster() {
+        return uiQueueTlouBooster;
+    }
+    
+    
+
+    
 }

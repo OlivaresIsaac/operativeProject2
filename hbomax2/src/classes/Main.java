@@ -19,8 +19,8 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
          GlobalUI.openMainPage();
-        Chapter test = new Chapter(1, "tlou");
-        test.printChapterInfo();
+        Administrator test = new Administrator();
+        test.testQueue();
     }
     
 }
