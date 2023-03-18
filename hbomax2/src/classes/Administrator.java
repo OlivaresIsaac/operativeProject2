@@ -80,6 +80,10 @@ public class Administrator {
         this.uiQueueTlouBooster.updateUiQueue(this.queueRm1);
     }
     
+    public void saveChapterToTxt(Chapter chapter) {
+        // Save Chapter To Txt
+    }
+    
     public void sendChaptersToBoosterQueue(Chapter chapterRm, Chapter chapterTlou) {
         this.returnChapterToQueue(chapterRm, this.queueRmBooster);
         this.returnChapterToQueue(chapterTlou, this.queueTlouBooster);

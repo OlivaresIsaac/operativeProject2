@@ -38,15 +38,25 @@ public class ArtificialIntelligence extends Thread {
             try {
                 int result = r.nextInt(100);
 
-                if (result < 40) { // 40%
-                    // Determinar un ganador del combate de series
-                } else if (result < 67) { // 27%
+                if (result <= 40) { // 40%
+                    Chapter winner;
+                    
+                    // Random to find who won 50/50
+                    int selector = r.nextInt(100);
+                    if(selector <= 50) {
+                        winner = this.chapterRm;
+                    } else {
+                        winner = this.chapterTlou;
+                    }
+                    
+                    this.administrator.saveChapterToTxt(winner);
+                } else if (result <= 67) { // 27%
                     this.administrator.returnChaptersToQueue(this.chapterRm, this.chapterTlou);
                 } else { // 33%
                     this.administrator.sendChaptersToBoosterQueue(this.chapterRm, this.chapterTlou);
                 }
 
-                Thread.sleep(this.runTime);
+                Thread.sleep(this.runTime / 5);
             } catch (InterruptedException ex) {
                 Logger.getLogger(ArtificialIntelligence.class.getName()).log(Level.SEVERE, null, ex);
             }
