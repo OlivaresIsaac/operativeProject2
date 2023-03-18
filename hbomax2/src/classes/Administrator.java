@@ -81,7 +81,8 @@ public class Administrator {
         // TODO: add a chapter to each plant
         ArtificialIntelligence ia = new ArtificialIntelligence(this);
         while (true) {
-            this.tryToReturnBoosterChapter();
+            this.tryToReturnBoosterChapter(this.queueRmBooster);
+            this.tryToReturnBoosterChapter(this.queueTlouBooster);
             
             if (this.counter >= 2) {
                 this.addNewChapter();
@@ -111,8 +112,11 @@ public class Administrator {
     }
     
     //TODO
-    private void tryToReturnBoosterChapter() {
+    private void tryToReturnBoosterChapter(Queue queue) {
         int result = r.nextInt(100);
+        if(queue.isEmpty()) 
+            return;
+        
         if (result <= 40) {
             // TODO: change chapter priority to 1
             // TODO: return booter chapter to its queue
