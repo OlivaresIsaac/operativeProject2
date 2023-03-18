@@ -79,6 +79,15 @@ public class Administrator {
         }
         this.uiQueueTlouBooster.updateUiQueue(this.queueRm1);
     }
+    
+    public void sendChaptersToBoosterQueue(Chapter chapterRm, Chapter chapterTlou) {
+        this.returnChapterToQueue(chapterRm, this.queueRmBooster);
+        this.returnChapterToQueue(chapterTlou, this.queueTlouBooster);
+    }
+    
+    private void returnChapterToQueue(Chapter chapter, Queue queueBooster) {
+        queueBooster.enqueue(chapter);
+    }
 
     public void returnChaptersToQueue(Chapter chapterRm, Chapter chapterTlou) {
         this.returnChapterToQueue(chapterRm, this.queueRm1, this.queueRm2, this.queueRm3);

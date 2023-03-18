@@ -43,7 +43,7 @@ public class ArtificialIntelligence extends Thread {
                 } else if (result < 67) { // 27%
                     this.administrator.returnChaptersToQueue(this.chapterRm, this.chapterTlou);
                 } else { // 33%
-                    // Determinar que no puede haber un ganador
+                    this.administrator.sendChaptersToBoosterQueue(this.chapterRm, this.chapterTlou);
                 }
 
                 Thread.sleep(this.runTime);
