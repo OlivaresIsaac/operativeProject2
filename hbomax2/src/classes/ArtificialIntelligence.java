@@ -20,9 +20,6 @@ public class ArtificialIntelligence extends Thread {
 
     int runTime;
 
-    Chapter chapterRm;
-    Chapter chapterTlou;
-
     final Random r = new Random();
 
     public ArtificialIntelligence(Administrator administrator) {
@@ -32,43 +29,32 @@ public class ArtificialIntelligence extends Thread {
         this.runTime = runTimeSeconds * 1000;
     }
 
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                int result = r.nextInt(100);
+    public void run(Chapter chapterRm, Chapter chapterTlou) {
+        try {
+            int result = r.nextInt(100);
 
-                if (result <= 40) { // 40%
-                    Chapter winner;
-                    
-                    // Random to find who won 50/50
-                    int selector = r.nextInt(100);
-                    if(selector <= 50) {
-                        winner = this.chapterRm;
-                    } else {
-                        winner = this.chapterTlou;
-                    }
-                    
-                    this.administrator.saveChapterToTxt(winner);
-                } else if (result <= 67) { // 27%
-                    this.administrator.returnChaptersToQueue(this.chapterRm, this.chapterTlou);
-                } else { // 33%
-                    this.administrator.sendChaptersToBoosterQueue(this.chapterRm, this.chapterTlou);
+            if (result <= 40) { // 40%
+                Chapter winner;
+
+                // Random to find who won 50/50
+                int selector = r.nextInt(100);
+                if (selector <= 50) {
+                    winner = chapterRm;
+                } else {
+                    winner = chapterTlou;
                 }
 
-                Thread.sleep(this.runTime / 5);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ArtificialIntelligence.class.getName()).log(Level.SEVERE, null, ex);
+                this.administrator.saveChapterToTxt(winner);
+
+            } else if (result <= 67) { // 27%
+                this.administrator.returnChaptersToQueue(chapterRm, chapterTlou);
+            } else { // 33%
+                this.administrator.sendChaptersToBoosterQueue(chapterRm, chapterTlou);
             }
+            Thread.sleep(this.runTime);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ArtificialIntelligence.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public void setChapterRm(Chapter chapterRm) {
-        this.chapterRm = chapterRm;
-    }
-
-    public void setChapterTlou(Chapter chapterTlou) {
-        this.chapterTlou = chapterTlou;
     }
 
     public void setRunTime(int runTime) {

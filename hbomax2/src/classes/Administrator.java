@@ -6,6 +6,7 @@
 package classes;
 
 import classes.dataStructures.Queue;
+import java.util.Random;
 import ui.GlobalUI;
 import ui.UiQueue;
 
@@ -14,6 +15,8 @@ import ui.UiQueue;
  * @author isaac
  */
 public class Administrator {
+
+    int counter = 0;
 
     public UiQueue uiQueueRm1;
     public Queue queueRm1;
@@ -38,6 +41,8 @@ public class Administrator {
 
     public UiQueue uiQueueTlouBooster;
     public Queue queueTlouBooster;
+
+    final Random r = new Random();
 
     public Administrator() {
         createQueues();
@@ -72,6 +77,54 @@ public class Administrator {
         this.queueTlouBooster = new Queue();
     }
 
+    public void startEmulator() {
+        // TODO: add a chapter to each plant
+        ArtificialIntelligence ia = new ArtificialIntelligence(this);
+        while (true) {
+            this.tryToReturnBoosterChapter();
+            
+            if (this.counter >= 2) {
+                this.addNewChapter();
+                this.setCounter(0);
+            }
+            
+            Chapter chapterRm = this.getChapterFromQueues(this.queueRm1, this.queueRm2, this.queueRm3);
+            Chapter chapterTlou = this.getChapterFromQueues(this.queueTlou1, this.queueTlou2, this.queueTlou3);
+            
+            chapterRm.setCounter(0);
+            chapterTlou.setCounter(0);
+            
+            ia.run(chapterRm, chapterTlou);
+            
+            // TODO: sum chapters counter +1
+        }
+    }
+
+    //TODO
+    private void addNewChapter() {
+        int result = r.nextInt(100);
+        if (result <= 70) {
+            // TODO: add a new series to the queue of its corresponding level
+        }
+    }
+    
+    //TODO
+    private void tryToReturnBoosterChapter() {
+        int result = r.nextInt(100);
+        if (result <= 40) {
+            // TODO: change chapter priority to 1
+            // TODO: return booter chapter to its queue
+        } else {
+            // TODO: put the chapter at the end of the queue
+        }
+    }
+    
+    //TODO
+    private Chapter getChapterFromQueues(Queue queue1, Queue queue2, Queue queue3) {
+        //TODO: review all lists and return a chapter
+        return null;
+    }
+
     public void testQueue() {
         for (int i = 0; i < 30; i++) {
             Chapter test = new Chapter(i, "tlou");
@@ -79,16 +132,16 @@ public class Administrator {
         }
         this.uiQueueTlouBooster.updateUiQueue(this.queueRm1);
     }
-    
+
     public void saveChapterToTxt(Chapter chapter) {
         // Save Chapter To Txt
     }
-    
+
     public void sendChaptersToBoosterQueue(Chapter chapterRm, Chapter chapterTlou) {
         this.returnChapterToQueue(chapterRm, this.queueRmBooster);
         this.returnChapterToQueue(chapterTlou, this.queueTlouBooster);
     }
-    
+
     private void returnChapterToQueue(Chapter chapter, Queue queueBooster) {
         queueBooster.enqueue(chapter);
     }
@@ -111,4 +164,9 @@ public class Administrator {
             queue3.enqueue(chapter);
         }
     }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
 }
