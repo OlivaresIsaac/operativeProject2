@@ -40,11 +40,11 @@ public class MainPage extends javax.swing.JFrame {
         uiQueueRm2 = new ui.UiQueue("Prioridad 2");
         uiQueueRm3 = new ui.UiQueue("Prioridad 3");
         uiQueueRmBooster = new ui.UiQueue("Cola de refuerzo");
-        rmBackground = new javax.swing.JLabel();
         uiQueueTlou2 = new ui.UiQueue("Prioridad 2");
         uiQueueTlou3 = new ui.UiQueue("Prioridad 3");
         uiQueueTlouBooster = new ui.UiQueue("Cola de refuerzo");
         tlouBackground = new javax.swing.JLabel();
+        rmBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -71,15 +71,15 @@ public class MainPage extends javax.swing.JFrame {
         jPanel1.add(uiQueueRm2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
         jPanel1.add(uiQueueRm3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
         jPanel1.add(uiQueueRmBooster, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, -1, -1));
-
-        rmBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/rmWallpaper.png"))); // NOI18N
-        jPanel1.add(rmBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(-540, 0, -1, -1));
         jPanel1.add(uiQueueTlou2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 200, -1, -1));
         jPanel1.add(uiQueueTlou3, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 300, -1, -1));
         jPanel1.add(uiQueueTlouBooster, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 400, -1, -1));
 
         tlouBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/TLOUWallpaper.png"))); // NOI18N
         jPanel1.add(tlouBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 0, -1, -1));
+
+        rmBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/rmWallpaper.png"))); // NOI18N
+        jPanel1.add(rmBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(-540, 0, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1170, 560));
 

@@ -7,6 +7,7 @@ package classes;
 
 import classes.dataStructures.Queue;
 import java.util.Random;
+import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,6 +18,7 @@ import java.util.logging.Logger;
 public class ArtificialIntelligence extends Thread {
 
     final Administrator administrator;
+    boolean emulatorRunning = true;
 
     Chapter chapterRm;
     Chapter chapterTlou;
@@ -24,21 +26,31 @@ public class ArtificialIntelligence extends Thread {
     int runTime;
 
     final Random r = new Random();
+    
+    public Semaphore mutex;
 
-    public ArtificialIntelligence(Administrator administrator) {
-        this.administrator = administrator;
+    public ArtificialIntelligence() {
+        this.administrator = Main.operativeSystem;
 
-        int runTimeSeconds = 6 + 0 + 9 + 1 + 10;
+//        int runTimeSeconds = 6 + 0 + 9 + 1 + 10;
+        int runTimeSeconds = 3;
         this.runTime = runTimeSeconds * 1000;
+        this.mutex = Main.mutex;
     }
 
     @Override
     public void run() {
         try {
             // null safety check
-            if (this.chapterRm == null || this.chapterTlou == null) {
+            while (this.emulatorRunning) {
+                System.out.println("ia");
+                this.mutex.acquire();
+                
+                if (this.chapterRm == null || this.chapterTlou == null) {
                 this.administrator.returnChaptersToQueue(this.chapterRm, this.chapterTlou);
                 Thread.sleep(this.runTime);
+                
+                
             } else {
                 int result = r.nextInt(100);
 
@@ -75,7 +87,13 @@ public class ArtificialIntelligence extends Thread {
                 }
 
                 Thread.sleep(this.runTime / 6);
+                
+                }
+                this.mutex.release();
+                Thread.sleep(100);
             }
+            
+           
 
         } catch (InterruptedException ex) {
             Logger.getLogger(ArtificialIntelligence.class.getName()).log(Level.SEVERE, null, ex);

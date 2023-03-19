@@ -74,7 +74,7 @@ public class PCB {
     }
     
     public void promotePriority(){
-        setPriorityLevel(getPriorityLevel()+1);
+        setPriorityLevel(getPriorityLevel()-1);
     }
     
     

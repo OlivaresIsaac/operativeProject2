@@ -8,6 +8,9 @@ package classes;
 import classes.dataStructures.Node;
 import classes.dataStructures.Queue;
 import java.util.Random;
+import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import ui.GlobalUI;
 import ui.UiQueue;
 
@@ -15,7 +18,7 @@ import ui.UiQueue;
  *
  * @author isaac
  */
-public class Administrator {
+public class Administrator extends Thread{
 
     int counter = 0;
     int rmIndex = 0;
@@ -48,9 +51,13 @@ public class Administrator {
     public Queue queueTlouBooster;
 
     final Random r = new Random();
+    
+    public ArtificialIntelligence ia;
+    public Semaphore mutex;
 
     public Administrator() {
         createQueues();
+        this.mutex = Main.mutex;
     }
 
     /**
@@ -80,16 +87,38 @@ public class Administrator {
 
         this.uiQueueTlouBooster = GlobalUI.getMainPage().getUiQueueTlouBooster();
         this.queueTlouBooster = new Queue();
+        
+        
     }
 
     public void startEmulator() {
         // add chapters
-        this.addChapter("rm");
-        this.addChapter("tlou");
+        
+        for (int i = 0; i < 20; i++) {
+            this.addChapter("rm");
+            this.addChapter("tlou");
+        }
+        this.updateAllUiQueues();
+       
         // initialize ia
-        ArtificialIntelligence ia = new ArtificialIntelligence(this);
-
-        while (this.emulatorRunning) {
+        this.ia = Main.ia;
+       
+        
+        try {
+            this.mutex.acquire();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Administrator.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.start();
+        ia.start();
+    }
+    
+    @Override
+   public void run(){
+        try {
+            while (this.emulatorRunning) {
+            System.out.println("so");
+//            this.mutex.acquire();
             // try to return booster chapter
             this.tryToReturnBoosterChapter(this.queueRmBooster, this.queueRm1, this.queueRm2, this.queueRm3);
             this.tryToReturnBoosterChapter(this.queueTlouBooster, this.queueTlou1, this.queueTlou2, this.queueTlou3);
@@ -117,6 +146,9 @@ public class Administrator {
             if (chapterTlou != null) {
                 chapterTlou.setCounter(0);
             }
+            this.mutex.release();
+            Thread.sleep(500);
+            this.mutex.acquire();
 
             // add one to chapter counters and check if privilege rises
             this.addOneToCounterAndCheckIfPrivilegeRises(this.queueRm2);
@@ -124,13 +156,20 @@ public class Administrator {
             this.addOneToCounterAndCheckIfPrivilegeRises(this.queueTlou2);
             this.addOneToCounterAndCheckIfPrivilegeRises(this.queueTlou3);
 
-            // init IA
-            ia.start();
+         
 
             // add one to administrator's counter
             this.setCounter(this.counter + 1);
+            this.updateAllUiQueues();
+//            this.mutex.release();
         }
-    }
+           
+//            Thread.sleep(100);
+            
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Administrator.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   }
 
     private void tryAddChapter(String studioInitials) {
         int result = r.nextInt(100);
@@ -174,7 +213,8 @@ public class Administrator {
                 PCB pcb = chapter.getPcb();
                 // if priority is greater than 1
                 if (pcb.getPriorityLevel() > 1) {
-                    pcb.setPriorityLevel(pcb.getPriorityLevel() - 1);
+                    pcb.promotePriority();
+//                    pcb.setPriorityLevel(pcb.getPriorityLevel() - 1);
                 }
                 chapter.setCounter(0);
             }
@@ -256,6 +296,18 @@ public class Administrator {
         if (priority == 3) {
             queue3.enqueue(chapter);
         }
+    }
+    
+    public void updateAllUiQueues(){
+        this.uiQueueRm1.updateUiQueue(this.queueRm1);
+        this.uiQueueRm2.updateUiQueue(this.queueRm2);
+        this.uiQueueRm3.updateUiQueue(this.queueRm3);
+        this.uiQueueRmBooster.updateUiQueue(this.queueRmBooster);
+        
+        this.uiQueueTlou1.updateUiQueue(this.queueTlou1);
+        this.uiQueueTlou2.updateUiQueue(this.queueTlou2);
+        this.uiQueueTlou3.updateUiQueue(this.queueTlou3);
+        this.uiQueueTlouBooster.updateUiQueue(this.queueTlouBooster);
     }
 
     public void setCounter(int counter) {
