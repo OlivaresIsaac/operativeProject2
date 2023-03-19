@@ -5,6 +5,7 @@
  */
 package classes;
 
+import classes.dataStructures.Node;
 import classes.dataStructures.Queue;
 import java.util.Random;
 import ui.GlobalUI;
@@ -81,25 +82,40 @@ public class Administrator {
         // TODO: add a chapter to each plant
         ArtificialIntelligence ia = new ArtificialIntelligence(this);
         while (true) {
-            this.tryToReturnBoosterChapter(this.queueRmBooster);
-            this.tryToReturnBoosterChapter(this.queueTlouBooster);
-            
+            // try to return booster chapter
+            this.tryToReturnBoosterChapter(this.queueRmBooster, this.queueRm1, this.queueRm2, this.queueRm3);
+            this.tryToReturnBoosterChapter(this.queueTlouBooster, this.queueTlou1, this.queueTlou2, this.queueTlou3);
+
             if (this.counter >= 2) {
+                // add a new chapter to some list
                 this.addNewChapter();
+                // reset administrator's counter
                 this.setCounter(0);
             }
-            
+
+            // get chapters
             Chapter chapterRm = this.getChapterFromQueues(this.queueRm1, this.queueRm2, this.queueRm3);
-            ia.setChapterRm(chapterRm);
             Chapter chapterTlou = this.getChapterFromQueues(this.queueTlou1, this.queueTlou2, this.queueTlou3);
-            ia.setChapterTlou(chapterTlou);
             
+            // set chapters to IA
+            ia.setChapterRm(chapterRm);
+            ia.setChapterTlou(chapterTlou);
+
+            // init IA
             ia.start();
             
-            chapterRm.setCounter(0);
-            chapterTlou.setCounter(0);
+            // add one to chapter counters
+            this.addOneToCounter(queueRm2);
+            this.addOneToCounter(queueRm3);
+            this.addOneToCounter(queueTlou2);
+            this.addOneToCounter(queueTlou3);
             
-            // TODO: sum chapters counter +1
+            // TODO: reset selected chapter's counter
+            // chapterRm.setCounter(0);
+            // chapterTlou.setCounter(0);
+            
+            // add one to administrator's counter
+            this.setCounter(this.counter + 1);
         }
     }
 
@@ -110,23 +126,46 @@ public class Administrator {
             // TODO: add a new series to the queue of its corresponding level
         }
     }
-    
-    //TODO
-    private void tryToReturnBoosterChapter(Queue queue) {
-        int result = r.nextInt(100);
-        if(queue.isEmpty()) 
-            return;
-        
-        if (result <= 40) {
-            // TODO: change chapter priority to 1
-            // TODO: return booter chapter to its queue
-        } else {
-            // TODO: put the chapter at the end of the queue
+
+    private void addOneToCounter(Queue queue) {
+        Node pointer = queue.getLast();
+        while (pointer != null) {
+            // add 1 to the counter
+            Chapter chapter = pointer.getElement();
+            chapter.setCounter(chapter.getCounter() + 1);
+
+            // if the counter is greater equal to 8 then move up priority
+            if (chapter.getCounter() >= 8) {
+                PCB pcb = chapter.getPcb();
+                // if priority is greater than 1
+                if (pcb.getPriorityLevel() > 1) {
+                    pcb.setPriorityLevel(pcb.getPriorityLevel() - 1);
+                }
+                chapter.setCounter(0);
+            }
+
+            pointer = pointer.getNext();
         }
     }
-    
+
+    private void tryToReturnBoosterChapter(Queue booster, Queue queue1, Queue queue2, Queue queue3) {
+        if (booster.isEmpty()) {
+            return;
+        }
+
+        int result = r.nextInt(100);
+        if (result <= 40) {
+            Chapter chapter = booster.dispatch();
+            chapter.getPcb().setPriorityLevel(1);
+            this.returnChapterToQueue(chapter, queue1, queue2, queue3);
+        } else {
+            Chapter chapter = booster.dispatch();
+            booster.enqueue(chapter);
+        }
+    }
+
     private Chapter getChapterFromQueues(Queue queue1, Queue queue2, Queue queue3) {
-        if(!queue1.isEmpty()) {
+        if (!queue1.isEmpty()) {
             return queue1.dispatch();
         } else if (!queue2.isEmpty()) {
             return queue2.dispatch();
@@ -145,7 +184,7 @@ public class Administrator {
     }
 
     public void saveChapterToTxt(Chapter chapter) {
-        // Save Chapter To Txt
+        // TODO: Save Chapter To Txt
     }
 
     public void sendChaptersToBoosterQueue(Chapter chapterRm, Chapter chapterTlou) {
@@ -153,13 +192,13 @@ public class Administrator {
         this.returnChapterToQueue(chapterTlou, this.queueTlouBooster);
     }
 
-    private void returnChapterToQueue(Chapter chapter, Queue queueBooster) {
-        queueBooster.enqueue(chapter);
-    }
-
     public void returnChaptersToQueue(Chapter chapterRm, Chapter chapterTlou) {
         this.returnChapterToQueue(chapterRm, this.queueRm1, this.queueRm2, this.queueRm3);
         this.returnChapterToQueue(chapterTlou, this.queueTlou1, this.queueTlou2, this.queueTlou3);
+    }
+
+    private void returnChapterToQueue(Chapter chapter, Queue queueBooster) {
+        queueBooster.enqueue(chapter);
     }
 
     private void returnChapterToQueue(Chapter chapter, Queue queue1, Queue queue2, Queue queue3) {
