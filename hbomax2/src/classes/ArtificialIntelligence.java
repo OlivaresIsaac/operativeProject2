@@ -33,6 +33,8 @@ public class ArtificialIntelligence extends Thread {
     
     public UiRing rmRing = GlobalUI.getMainPage().getUiRingRm();
     public UiRing tlouRing = GlobalUI.getMainPage().getUiRingTlou();
+     //ACTUALIZAR CON CANTIDAD DE ICONOS
+    public int totalCharacters = 3;
     
 
     public ArtificialIntelligence() {
@@ -60,33 +62,57 @@ public class ArtificialIntelligence extends Thread {
             } else {
                 updateUiRing();
                 GlobalUI.getMainPage().setStatusLabel("Decidiendo...");
+                int rmIndex = 1;
+                int tlouIndex = 3;
+                int spins = r.nextInt(31);
+                for(int i = 0; i<spins; i++){
+                    
+                    rmIndex = (rmIndex >= this.totalCharacters) ? 1 : rmIndex+1;
+                    tlouIndex = (tlouIndex >= this.totalCharacters) ? 1 : tlouIndex+1;
+                    
+                    rmRing.setCharactericon(rmIndex);
+                    tlouRing.setCharactericon(tlouIndex);
+                   
+                    
+                    
+                    Thread.sleep(100);
+                } 
+                    
+                    
+                updateUiRing();
+               
                 int result = r.nextInt(100);
 
-                Thread.sleep(this.runTime / 6);
+//                
 
                 // select a winner
                 if (result <= 40) { // 40%
                     Chapter winner;
                     
-                    Thread.sleep(3 * this.runTime / 6);
                     GlobalUI.getMainPage().setStatusLabel("Ganador!");
+//                    Thread.sleep(3 * this.runTime / 6);
+                   
                     // TODO: RULETA
-                    int selector = r.nextInt(100);
-                    if (selector <= 50) {
+//                    int selector = r.nextInt(100);
+                    if (rmIndex <= tlouIndex) {
                         winner = this.chapterRm;
                         this.rmRing.setWinner();
                     } else {
                         winner = this.chapterTlou;
                         this.tlouRing.setWinner();
                     }
-
+                    Thread.sleep(3 * this.runTime / 6);
                     Thread.sleep(this.runTime / 6);
+                    
+                    updateUiRing();
 
                     this.administrator.saveChapterToTxt(winner);
 
                 } 
                 // return chapters to its queue
                 else if (result <= 67) { // 27%
+                    rmRing.setCharactericon(rmIndex);
+                    tlouRing.setCharactericon(rmIndex);
                     GlobalUI.getMainPage().setStatusLabel("Empate");
                     Thread.sleep(4 * this.runTime / 6);
                     this.administrator.returnChaptersToQueue(this.chapterRm, this.chapterTlou);
@@ -97,11 +123,12 @@ public class ArtificialIntelligence extends Thread {
                     Thread.sleep(4 * this.runTime / 6);
                     this.administrator.sendChaptersToBoosterQueue(this.chapterRm, this.chapterTlou);
                 }
-
+                GlobalUI.getMainPage().setStatusLabel("Esperando");
                 Thread.sleep(this.runTime / 6);
                 
                 }
-                GlobalUI.getMainPage().setStatusLabel("Esperando");
+                Thread.sleep(this.runTime / 6);
+                
                 this.mutex.release();
                 Thread.sleep(100);
             }

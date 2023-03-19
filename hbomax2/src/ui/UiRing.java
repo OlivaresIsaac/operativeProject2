@@ -36,6 +36,13 @@ public class UiRing extends javax.swing.JPanel {
     public void setWinner(){
         this.crownLabel.setEnabled(true);
     }
+    
+    public void setCharactericon(int index) {
+        String aux = String.valueOf(index);
+        String power = String.valueOf(100-(index*10));
+        this.iconLabel.setIcon(new ImageIcon("src\\assets\\"+aux+".png"));
+        this.powerLabel.setText(power);
+    }
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -52,6 +59,8 @@ public class UiRing extends javax.swing.JPanel {
         nameTitle = new javax.swing.JLabel();
         iconLabel = new javax.swing.JLabel();
         crownLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        powerLabel = new javax.swing.JLabel();
 
         jButton1.setText("jButton1");
 
@@ -74,6 +83,12 @@ public class UiRing extends javax.swing.JPanel {
         crownLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/crown.png"))); // NOI18N
         mainPane.add(crownLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
 
+        jLabel1.setText("Poder:");
+        mainPane.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, -1, -1));
+
+        powerLabel.setText("nro Poder");
+        mainPane.add(powerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, -1, -1));
+
         add(mainPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 350));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -83,8 +98,10 @@ public class UiRing extends javax.swing.JPanel {
     private javax.swing.JLabel iconLabel;
     private javax.swing.JLabel idTitle;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel mainPane;
     private javax.swing.JLabel nameTitle;
+    private javax.swing.JLabel powerLabel;
     // End of variables declaration//GEN-END:variables
 
 }

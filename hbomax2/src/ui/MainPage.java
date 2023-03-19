@@ -73,7 +73,7 @@ public class MainPage extends javax.swing.JFrame {
         fightPanel.add(uiRingTlou, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, -1));
 
         statusLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        statusLabel.setText("jLabel2");
+        statusLabel.setText("Decidiendo...");
         fightPanel.add(statusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         jPanel1.add(fightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 110, 430, 340));
