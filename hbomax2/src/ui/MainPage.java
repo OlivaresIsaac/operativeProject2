@@ -5,6 +5,8 @@
  */
 package ui;
 
+import javax.swing.JLabel;
+
 /**
  *
  * @author isaac
@@ -35,6 +37,9 @@ public class MainPage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         fightPanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        uiRingRm = new ui.UiRing();
+        uiRingTlou = new ui.UiRing();
+        statusLabel = new javax.swing.JLabel();
         uiQueueTlou1 = new ui.UiQueue("Prioridad 1");
         uiQueueRm1 = new ui.UiQueue("Prioridad 1");
         uiQueueRm2 = new ui.UiQueue("Prioridad 2");
@@ -64,6 +69,12 @@ public class MainPage extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/vs.png"))); // NOI18N
         fightPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, -1, -1));
+        fightPanel.add(uiRingRm, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        fightPanel.add(uiRingTlou, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, -1, -1));
+
+        statusLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        statusLabel.setText("jLabel2");
+        fightPanel.add(statusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
         jPanel1.add(fightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 110, 430, 340));
         jPanel1.add(uiQueueTlou1, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 100, -1, -1));
@@ -129,6 +140,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel rmBackground;
+    private javax.swing.JLabel statusLabel;
     private javax.swing.JLabel tlouBackground;
     private ui.UiQueue uiQueueRm1;
     private ui.UiQueue uiQueueRm2;
@@ -138,6 +150,8 @@ public class MainPage extends javax.swing.JFrame {
     private ui.UiQueue uiQueueTlou2;
     private ui.UiQueue uiQueueTlou3;
     private ui.UiQueue uiQueueTlouBooster;
+    private ui.UiRing uiRingRm;
+    private ui.UiRing uiRingTlou;
     // End of variables declaration//GEN-END:variables
 
     public UiQueue getUiQueueRm1() {
@@ -171,6 +185,24 @@ public class MainPage extends javax.swing.JFrame {
     public UiQueue getUiQueueTlouBooster() {
         return uiQueueTlouBooster;
     }
+
+    public UiRing getUiRingRm() {
+        return uiRingRm;
+    }
+
+    public UiRing getUiRingTlou() {
+        return uiRingTlou;
+    }
+
+    public JLabel getStatusLabel() {
+        return statusLabel;
+    }
+    
+    public void setStatusLabel(String status) {
+        statusLabel.setText(status);
+    }
+    
+    
     
     
 

@@ -31,7 +31,6 @@ public class UiQueue extends javax.swing.JPanel {
     }
     
     public void updateUiQueue(Queue chaptersQueue){
-        System.out.println(chaptersQueue.buildStringForUiQueue());
         this.queueLabel.setText(chaptersQueue.buildStringForUiQueue());
     }
 

@@ -117,7 +117,7 @@ public class Administrator extends Thread{
    public void run(){
         try {
             while (this.emulatorRunning) {
-            System.out.println("so");
+            
 //            this.mutex.acquire();
             // try to return booster chapter
             this.tryToReturnBoosterChapter(this.queueRmBooster, this.queueRm1, this.queueRm2, this.queueRm3);
