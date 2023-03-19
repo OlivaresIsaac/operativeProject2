@@ -18,6 +18,8 @@ import ui.UiQueue;
 public class Administrator {
 
     int counter = 0;
+    int rmIndex = 0;
+    int tlouIndex = 0;
 
     public UiQueue uiQueueRm1;
     public Queue queueRm1;
@@ -79,16 +81,18 @@ public class Administrator {
     }
 
     public void startEmulator() {
-        // TODO: add a chapter to each plant
+        this.addChapter("rm");
+        this.addChapter("tlou");
         ArtificialIntelligence ia = new ArtificialIntelligence(this);
+
         while (true) {
             // try to return booster chapter
             this.tryToReturnBoosterChapter(this.queueRmBooster, this.queueRm1, this.queueRm2, this.queueRm3);
             this.tryToReturnBoosterChapter(this.queueTlouBooster, this.queueTlou1, this.queueTlou2, this.queueTlou3);
 
             if (this.counter >= 2) {
-                // add a new chapter to some list
-                this.addNewChapter();
+                this.tryAddChapter("rm");
+                this.tryAddChapter("tlou");
                 // reset administrator's counter
                 this.setCounter(0);
             }
@@ -96,35 +100,56 @@ public class Administrator {
             // get chapters
             Chapter chapterRm = this.getChapterFromQueues(this.queueRm1, this.queueRm2, this.queueRm3);
             Chapter chapterTlou = this.getChapterFromQueues(this.queueTlou1, this.queueTlou2, this.queueTlou3);
-            
+
             // set chapters to IA
             ia.setChapterRm(chapterRm);
             ia.setChapterTlou(chapterTlou);
 
             // init IA
             ia.start();
-            
+
             // add one to chapter counters
-            this.addOneToCounter(queueRm2);
-            this.addOneToCounter(queueRm3);
-            this.addOneToCounter(queueTlou2);
-            this.addOneToCounter(queueTlou3);
-            
+            this.addOneToCounter(this.queueRm2);
+            this.addOneToCounter(this.queueRm3);
+            this.addOneToCounter(this.queueTlou2);
+            this.addOneToCounter(this.queueTlou3);
+
             // TODO: reset selected chapter's counter
             // chapterRm.setCounter(0);
             // chapterTlou.setCounter(0);
-            
             // add one to administrator's counter
             this.setCounter(this.counter + 1);
         }
     }
 
-    //TODO
-    private void addNewChapter() {
+    private void tryAddChapter(String studioInitials) {
         int result = r.nextInt(100);
         if (result <= 70) {
-            // TODO: add a new series to the queue of its corresponding level
+            this.addChapter(studioInitials);
         }
+    }
+
+    private void addChapter(String studioInitials) {
+        if (studioInitials.equals("rm")) {
+            this.rmIndex += 1;
+            // create new chapter
+            Chapter newChapter = this.createChapter(this.rmIndex, studioInitials);
+            // move chapter to its queue
+            this.returnChapterToQueue(newChapter, this.queueRm3, this.queueRm2, this.queueRm3);
+        }
+        
+        if (studioInitials.equals("tlou")) {
+            this.tlouIndex += 1;
+            // create new chapter
+            Chapter newChapter = this.createChapter(this.tlouIndex, studioInitials);
+            // move chapter to its queue
+            this.returnChapterToQueue(newChapter, this.queueTlou3, this.queueTlou2, this.queueTlou3);
+        }
+
+    }
+
+    private Chapter createChapter(int index, String studioInitials) {
+        return new Chapter(index, studioInitials);
     }
 
     private void addOneToCounter(Queue queue) {
