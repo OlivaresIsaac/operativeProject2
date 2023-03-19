@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class ArtificialIntelligence extends Thread {
 
     final Administrator administrator;
-    
+
     Chapter chapterRm;
     Chapter chapterTlou;
 
@@ -35,27 +35,48 @@ public class ArtificialIntelligence extends Thread {
     @Override
     public void run() {
         try {
-            int result = r.nextInt(100);
+            // null safety check
+            if (this.chapterRm == null || this.chapterTlou == null) {
+                this.administrator.returnChaptersToQueue(this.chapterRm, this.chapterTlou);
+                Thread.sleep(this.runTime);
+            } else {
+                int result = r.nextInt(100);
 
-            if (result <= 40) { // 40%
-                Chapter winner;
+                Thread.sleep(this.runTime / 6);
 
-                // Random to find who won 50/50
-                int selector = r.nextInt(100);
-                if (selector <= 50) {
-                    winner = this.chapterRm;
-                } else {
-                    winner = this.chapterTlou;
+                // select a winner
+                if (result <= 40) { // 40%
+                    Chapter winner;
+
+                    Thread.sleep(3 * this.runTime / 6);
+
+                    // TODO: RULETA
+                    int selector = r.nextInt(100);
+                    if (selector <= 50) {
+                        winner = this.chapterRm;
+                    } else {
+                        winner = this.chapterTlou;
+                    }
+
+                    Thread.sleep(this.runTime / 6);
+
+                    this.administrator.saveChapterToTxt(winner);
+
+                } 
+                // return chapters to its queue
+                else if (result <= 67) { // 27%
+                    Thread.sleep(4 * this.runTime / 6);
+                    this.administrator.returnChaptersToQueue(this.chapterRm, this.chapterTlou);
+                } 
+                // send chapters to booster queue
+                else { // 33%
+                    Thread.sleep(4 * this.runTime / 6);
+                    this.administrator.sendChaptersToBoosterQueue(this.chapterRm, this.chapterTlou);
                 }
 
-                this.administrator.saveChapterToTxt(winner);
-
-            } else if (result <= 67) { // 27%
-                this.administrator.returnChaptersToQueue(this.chapterRm, this.chapterTlou);
-            } else { // 33%
-                this.administrator.sendChaptersToBoosterQueue(this.chapterRm, this.chapterTlou);
+                Thread.sleep(this.runTime / 6);
             }
-            Thread.sleep(this.runTime);
+
         } catch (InterruptedException ex) {
             Logger.getLogger(ArtificialIntelligence.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -72,7 +93,5 @@ public class ArtificialIntelligence extends Thread {
     public void setChapterTlou(Chapter chapterTlou) {
         this.chapterTlou = chapterTlou;
     }
-    
-    
 
 }

@@ -21,6 +21,8 @@ public class Administrator {
     int rmIndex = 0;
     int tlouIndex = 0;
 
+    boolean emulatorRunning = true;
+
     public UiQueue uiQueueRm1;
     public Queue queueRm1;
 
@@ -81,16 +83,19 @@ public class Administrator {
     }
 
     public void startEmulator() {
+        // add chapters
         this.addChapter("rm");
         this.addChapter("tlou");
+        // initialize ia
         ArtificialIntelligence ia = new ArtificialIntelligence(this);
 
-        while (true) {
+        while (this.emulatorRunning) {
             // try to return booster chapter
             this.tryToReturnBoosterChapter(this.queueRmBooster, this.queueRm1, this.queueRm2, this.queueRm3);
             this.tryToReturnBoosterChapter(this.queueTlouBooster, this.queueTlou1, this.queueTlou2, this.queueTlou3);
 
             if (this.counter >= 2) {
+                // try add new chapter
                 this.tryAddChapter("rm");
                 this.tryAddChapter("tlou");
                 // reset administrator's counter
@@ -105,18 +110,23 @@ public class Administrator {
             ia.setChapterRm(chapterRm);
             ia.setChapterTlou(chapterTlou);
 
+            // reset selected chapter's counter
+            if (chapterRm != null) {
+                chapterRm.setCounter(0);
+            }
+            if (chapterTlou != null) {
+                chapterTlou.setCounter(0);
+            }
+
+            // add one to chapter counters and check if privilege rises
+            this.addOneToCounterAndCheckIfPrivilegeRises(this.queueRm2);
+            this.addOneToCounterAndCheckIfPrivilegeRises(this.queueRm3);
+            this.addOneToCounterAndCheckIfPrivilegeRises(this.queueTlou2);
+            this.addOneToCounterAndCheckIfPrivilegeRises(this.queueTlou3);
+
             // init IA
             ia.start();
 
-            // add one to chapter counters
-            this.addOneToCounter(this.queueRm2);
-            this.addOneToCounter(this.queueRm3);
-            this.addOneToCounter(this.queueTlou2);
-            this.addOneToCounter(this.queueTlou3);
-
-            // TODO: reset selected chapter's counter
-            // chapterRm.setCounter(0);
-            // chapterTlou.setCounter(0);
             // add one to administrator's counter
             this.setCounter(this.counter + 1);
         }
@@ -135,15 +145,15 @@ public class Administrator {
             // create new chapter
             Chapter newChapter = this.createChapter(this.rmIndex, studioInitials);
             // move chapter to its queue
-            this.returnChapterToQueue(newChapter, this.queueRm3, this.queueRm2, this.queueRm3);
+            this.returnChapterToQueue(newChapter, this.queueRm1, this.queueRm2, this.queueRm3);
         }
-        
+
         if (studioInitials.equals("tlou")) {
             this.tlouIndex += 1;
             // create new chapter
             Chapter newChapter = this.createChapter(this.tlouIndex, studioInitials);
             // move chapter to its queue
-            this.returnChapterToQueue(newChapter, this.queueTlou3, this.queueTlou2, this.queueTlou3);
+            this.returnChapterToQueue(newChapter, this.queueTlou1, this.queueTlou2, this.queueTlou3);
         }
 
     }
@@ -152,7 +162,7 @@ public class Administrator {
         return new Chapter(index, studioInitials);
     }
 
-    private void addOneToCounter(Queue queue) {
+    private void addOneToCounterAndCheckIfPrivilegeRises(Queue queue) {
         Node pointer = queue.getLast();
         while (pointer != null) {
             // add 1 to the counter
@@ -212,14 +222,22 @@ public class Administrator {
         // TODO: Save Chapter To Txt
     }
 
-    public void sendChaptersToBoosterQueue(Chapter chapterRm, Chapter chapterTlou) {
-        this.returnChapterToQueue(chapterRm, this.queueRmBooster);
-        this.returnChapterToQueue(chapterTlou, this.queueTlouBooster);
+    public void returnChaptersToQueue(Chapter chapterRm, Chapter chapterTlou) {
+        if (chapterRm != null) {
+            this.returnChapterToQueue(chapterRm, this.queueRm1, this.queueRm2, this.queueRm3);
+        }
+        if (chapterTlou != null) {
+            this.returnChapterToQueue(chapterTlou, this.queueTlou1, this.queueTlou2, this.queueTlou3);
+        }
     }
 
-    public void returnChaptersToQueue(Chapter chapterRm, Chapter chapterTlou) {
-        this.returnChapterToQueue(chapterRm, this.queueRm1, this.queueRm2, this.queueRm3);
-        this.returnChapterToQueue(chapterTlou, this.queueTlou1, this.queueTlou2, this.queueTlou3);
+    public void sendChaptersToBoosterQueue(Chapter chapterRm, Chapter chapterTlou) {
+        if (chapterRm != null) {
+            this.returnChapterToQueue(chapterRm, this.queueRmBooster);
+        }
+        if (chapterTlou != null) {
+            this.returnChapterToQueue(chapterTlou, this.queueTlouBooster);
+        }
     }
 
     private void returnChapterToQueue(Chapter chapter, Queue queueBooster) {
@@ -244,4 +262,7 @@ public class Administrator {
         this.counter = counter;
     }
 
+    public void setEmulatorRunning(boolean emulatorRunning) {
+        this.emulatorRunning = emulatorRunning;
+    }
 }
