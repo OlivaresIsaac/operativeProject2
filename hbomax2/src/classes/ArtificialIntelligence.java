@@ -28,14 +28,13 @@ public class ArtificialIntelligence extends Thread {
     int runTime;
 
     final Random r = new Random();
-    
+
     public Semaphore mutex;
-    
+
     public UiRing rmRing = GlobalUI.getMainPage().getUiRingRm();
     public UiRing tlouRing = GlobalUI.getMainPage().getUiRingTlou();
-     //ACTUALIZAR CON CANTIDAD DE ICONOS
+    //ACTUALIZAR CON CANTIDAD DE ICONOS
     public int totalCharacters = 9;
-    
 
     public ArtificialIntelligence() {
         this.administrator = Main.operativeSystem;
@@ -51,92 +50,79 @@ public class ArtificialIntelligence extends Thread {
         try {
             // null safety check
             while (this.emulatorRunning) {
-               
+
                 this.mutex.acquire();
-                
+
                 if (this.chapterRm == null || this.chapterTlou == null) {
-                this.administrator.returnChaptersToQueue(this.chapterRm, this.chapterTlou);
-                Thread.sleep(this.runTime);
-                
-                
-            } else {
-                updateUiRing();
-                GlobalUI.getMainPage().setStatusLabel("Decidiendo...");
-                int rmIndex = (this.chapterRm.getDuration()%this.totalCharacters)+1;
-                int tlouIndex = (this.chapterTlou.getDuration()%this.totalCharacters)+1;
-                tlouIndex += (rmIndex == tlouIndex) ? 1 : 0;
-               
-                
-                int spins = r.nextInt(31)+10;
-                for(int i = 0; i<spins; i++){
-                    
-                    rmIndex = (rmIndex >= this.totalCharacters) ? 1 : rmIndex+1;
-                    tlouIndex = (tlouIndex >= this.totalCharacters) ? 1 : tlouIndex+1;
-                    
-                    rmRing.setCharactericon(rmIndex);
-                    tlouRing.setCharactericon(tlouIndex);
-                   
-                    
-                    
-                    Thread.sleep(100);
-                } 
-                    
-                    
-                updateUiRing();
-               
-                int result = r.nextInt(100);
+                    this.administrator.returnChaptersToQueue(this.chapterRm, this.chapterTlou);
+                    Thread.sleep(this.runTime);
 
-//                
-
-                // select a winner
-                if (result <= 40) { // 40%
-                    Chapter winner;
-                    
-                    GlobalUI.getMainPage().setStatusLabel("Ganador!");
-//                    Thread.sleep(3 * this.runTime / 6);
-                   
-
-//                    int selector = r.nextInt(100);
-                    if (rmIndex <= tlouIndex) {
-                        winner = this.chapterRm;
-                        this.rmRing.setWinner();
-                    } else {
-                        winner = this.chapterTlou;
-                        this.tlouRing.setWinner();
-                    }
-                    Thread.sleep(3 * this.runTime / 6);
-                    Thread.sleep(this.runTime / 6);
-                    
+                } else {
                     updateUiRing();
 
-                    this.administrator.saveChapterToTxt(winner);
+                    GlobalUI.getMainPage().setStatusLabel("Decidiendo...");
 
-                } 
-                // return chapters to its queue
-                else if (result <= 67) { // 27%
-                    rmRing.setCharactericon(rmIndex);
-                    tlouRing.setCharactericon(rmIndex);
-                    GlobalUI.getMainPage().setStatusLabel("Empate");
-                    Thread.sleep(4 * this.runTime / 6);
-                    this.administrator.returnChaptersToQueue(this.chapterRm, this.chapterTlou);
-                } 
-                // send chapters to booster queue
-                else { // 33%
-                    GlobalUI.getMainPage().setStatusLabel("Reforzar");
-                    Thread.sleep(4 * this.runTime / 6);
-                    this.administrator.sendChaptersToBoosterQueue(this.chapterRm, this.chapterTlou);
+                    int rmIndex = (this.chapterRm.getDuration() % this.totalCharacters) + 1;
+                    int tlouIndex = (this.chapterTlou.getDuration() % this.totalCharacters) + 1;
+                    tlouIndex += (rmIndex == tlouIndex) ? 1 : 0;
+
+                    int spins = r.nextInt(31) + 10;
+                    for (int i = 0; i < spins; i++) {
+
+                        rmIndex = (rmIndex >= this.totalCharacters) ? 1 : rmIndex + 1;
+                        tlouIndex = (tlouIndex >= this.totalCharacters) ? 1 : tlouIndex + 1;
+
+                        rmRing.setCharactericon(rmIndex);
+                        tlouRing.setCharactericon(tlouIndex);
+
+                        Thread.sleep(100); //TODO
+                    }
+
+                    updateUiRing();
+
+                    int result = r.nextInt(100);
+                    // select a winner
+                    if (result <= 40) { // 40%
+                        Chapter winner;
+
+                        GlobalUI.getMainPage().setStatusLabel("Ganador!");
+
+                        if (rmIndex <= tlouIndex) {
+                            winner = this.chapterRm;
+                            this.rmRing.setWinner();
+                        } else {
+                            winner = this.chapterTlou;
+                            this.tlouRing.setWinner();
+                        }
+                        Thread.sleep(4 * this.runTime / 7);
+
+                        updateUiRing();
+
+                        this.administrator.saveChapterToTxt(winner);
+                    } // return chapters to its queue
+                    else if (result <= 67) { // 27%
+                        rmRing.setCharactericon(rmIndex);
+                        tlouRing.setCharactericon(rmIndex);
+                        GlobalUI.getMainPage().setStatusLabel("Empate");
+                        Thread.sleep(4 * this.runTime / 7);
+                        this.administrator.returnChaptersToQueue(this.chapterRm, this.chapterTlou);
+                    } // send chapters to booster queue
+                    else { // 33%
+                        GlobalUI.getMainPage().setStatusLabel("Reforzar");
+                        Thread.sleep(4 * this.runTime / 7);
+                        this.administrator.sendChaptersToBoosterQueue(this.chapterRm, this.chapterTlou);
+                    }
+                    
+                    GlobalUI.getMainPage().setStatusLabel("Esperando");
+                    
                 }
-                GlobalUI.getMainPage().setStatusLabel("Esperando");
-                Thread.sleep(this.runTime / 6);
-                
-                }
-                Thread.sleep(this.runTime / 6);
-                
+
+                Thread.sleep(2 * this.runTime / 7);
+
                 this.mutex.release();
-                Thread.sleep(100);
+
+                Thread.sleep(this.runTime / 7);
             }
-            
-           
 
         } catch (InterruptedException ex) {
             Logger.getLogger(ArtificialIntelligence.class.getName()).log(Level.SEVERE, null, ex);
@@ -154,8 +140,8 @@ public class ArtificialIntelligence extends Thread {
     public void setChapterTlou(Chapter chapterTlou) {
         this.chapterTlou = chapterTlou;
     }
-    
-    public void updateUiRing(){
+
+    public void updateUiRing() {
         this.rmRing.updateRing(this.chapterRm);
         this.tlouRing.updateRing(this.chapterTlou);
     }

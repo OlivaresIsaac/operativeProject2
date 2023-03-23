@@ -5,6 +5,7 @@
  */
 package ui;
 
+import classes.Main;
 import javax.swing.JLabel;
 
 /**
@@ -32,6 +33,7 @@ public class MainPage extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jSlider1 = new javax.swing.JSlider();
         hboLogo = new javax.swing.JLabel();
         RMLogo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -55,6 +57,20 @@ public class MainPage extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jSlider1.setMajorTickSpacing(10);
+        jSlider1.setMaximum(60);
+        jSlider1.setMinimum(1);
+        jSlider1.setMinorTickSpacing(1);
+        jSlider1.setPaintLabels(true);
+        jSlider1.setPaintTicks(true);
+        jSlider1.setValue(26);
+        jSlider1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSlider1StateChanged(evt);
+            }
+        });
+        jPanel1.add(jSlider1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 510, -1, -1));
 
         hboLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/hboLogo.png"))); // NOI18N
         jPanel1.add(hboLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, -1, 80));
@@ -96,6 +112,10 @@ public class MainPage extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
+        Main.ia.setRunTime(this.jSlider1.getValue() * 1000);
+    }//GEN-LAST:event_jSlider1StateChanged
 
     /**
      * @param args the command line arguments
@@ -139,6 +159,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSlider jSlider1;
     private javax.swing.JLabel rmBackground;
     private javax.swing.JLabel statusLabel;
     private javax.swing.JLabel tlouBackground;
