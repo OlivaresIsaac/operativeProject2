@@ -16,13 +16,13 @@ public class ChaptersName {
     public static String[] rmChaptersName = new String[] {
         "Pilot rm","Lawnmower Dog", "Anatomy Park", "M. Night Shaym-Aliens!", 
         "Meeseeks and Destroy", "Rick Potion #9","Raising Gazorpazorp",	"Rixty Minutes"
-            ,	"Something Ricked This Way Comes", "Close Rick-counters of the Rick Kind", "Ricksy Business"
+            ,	"Something Ricked", "Close Rick-counters", "Ricksy Business"
     };
     
     public static String[] tlouChaptersName = new String[] {
-        "Pilot tlou","The Prologue and the Quarantine Zone", "The Outskirts", "Bill's Town", 
+        "Pilot tlou","The Prologue", "The Outskirts", "Bill's Town", 
         "Pittsburgh", "The Suburbs","Tommy's Dam","The University"
-            ,	"Lakeside Resort", "Bus Depot", "The Firefly Lab and Jackson"
+            ,	"Lakeside Resort", "Bus Depot", "The Firefly Lab"
     };
     
     public static Random random = new Random();

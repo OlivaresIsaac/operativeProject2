@@ -27,6 +27,15 @@ public final class Chapter {
        
     }
     
+        public Chapter(int id, String studioInitials, String chapterName) {
+        calculateDuration(studioInitials);
+        this.pcb = new PCB(id, studioInitials, calculatePriorityLevel());        
+        this.counter = 0;
+        this.chapterName = chapterName;
+      
+       
+    }
+    
      /**
      * Calculates the duration of the chapter based on the qty and
      * quality of their chapters parts.
@@ -140,6 +149,10 @@ public final class Chapter {
     public void printChapterInfo(){
 
         System.out.println("Capitulo: "+getChapterName()+" Duracion: "+ getDuration()+" idCompleto: "+getPcb().getCompleteId()+ " prioridad: "+getPcb().getPriorityLevel()+"\n");
+    }
+    
+    public String toSaveString(){
+        return(getPcb().getNumericId()+","+(getPcb().getStudioInitials().equals("rm") ? "r" : "t")+","+getChapterName()+"\n");
     }
     
     

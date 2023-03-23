@@ -5,6 +5,7 @@
  */
 package classes;
 
+import static classes.FunctionsTXT.saveNewWinner;
 import classes.dataStructures.Node;
 import classes.dataStructures.Queue;
 import java.util.Random;
@@ -259,7 +260,7 @@ public class Administrator extends Thread{
     }
 
     public void saveChapterToTxt(Chapter chapter) {
-        // TODO: Save Chapter To Txt
+        FunctionsTXT.saveNewWinner(chapter);
     }
 
     public void returnChaptersToQueue(Chapter chapterRm, Chapter chapterTlou) {

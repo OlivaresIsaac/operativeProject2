@@ -62,13 +62,10 @@ public class ArtificialIntelligence extends Thread {
             } else {
                 updateUiRing();
                 GlobalUI.getMainPage().setStatusLabel("Decidiendo...");
-                int rmIndex = r.nextInt(9)+1;
-                int tlouIndex = -1;
-                boolean invalidIndex = true;
-                while(invalidIndex) {
-                    tlouIndex = r.nextInt(9)+1;
-                    invalidIndex = (tlouIndex == rmIndex);
-                }
+                int rmIndex = (this.chapterRm.getDuration()%this.totalCharacters)+1;
+                int tlouIndex = (this.chapterTlou.getDuration()%this.totalCharacters)+1;
+                tlouIndex += (rmIndex == tlouIndex) ? 1 : 0;
+               
                 
                 int spins = r.nextInt(31)+10;
                 for(int i = 0; i<spins; i++){

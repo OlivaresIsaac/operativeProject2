@@ -23,6 +23,7 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
         GlobalUI.openMainPage();
+        FunctionsTXT.resetTXT();
         operativeSystem.startEmulator();
     }
     
