@@ -34,7 +34,7 @@ public class ArtificialIntelligence extends Thread {
     public UiRing rmRing = GlobalUI.getMainPage().getUiRingRm();
     public UiRing tlouRing = GlobalUI.getMainPage().getUiRingTlou();
      //ACTUALIZAR CON CANTIDAD DE ICONOS
-    public int totalCharacters = 3;
+    public int totalCharacters = 9;
     
 
     public ArtificialIntelligence() {
@@ -62,9 +62,15 @@ public class ArtificialIntelligence extends Thread {
             } else {
                 updateUiRing();
                 GlobalUI.getMainPage().setStatusLabel("Decidiendo...");
-                int rmIndex = 1;
-                int tlouIndex = 3;
-                int spins = r.nextInt(31);
+                int rmIndex = r.nextInt(9)+1;
+                int tlouIndex = -1;
+                boolean invalidIndex = true;
+                while(invalidIndex) {
+                    tlouIndex = r.nextInt(9)+1;
+                    invalidIndex = (tlouIndex == rmIndex);
+                }
+                
+                int spins = r.nextInt(31)+10;
                 for(int i = 0; i<spins; i++){
                     
                     rmIndex = (rmIndex >= this.totalCharacters) ? 1 : rmIndex+1;
@@ -92,7 +98,7 @@ public class ArtificialIntelligence extends Thread {
                     GlobalUI.getMainPage().setStatusLabel("Ganador!");
 //                    Thread.sleep(3 * this.runTime / 6);
                    
-                    // TODO: RULETA
+
 //                    int selector = r.nextInt(100);
                     if (rmIndex <= tlouIndex) {
                         winner = this.chapterRm;
