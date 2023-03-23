@@ -30,7 +30,7 @@ public final class Chapter {
         public Chapter(int id, String studioInitials, String chapterName) {
         calculateDuration(studioInitials);
         this.pcb = new PCB(id, studioInitials, calculatePriorityLevel());        
-        this.counter = 0;
+        this.counter = 1;
         this.chapterName = chapterName;
       
        

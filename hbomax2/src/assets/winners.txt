@@ -1,29 +1,6 @@
-rmPoints: 17, tlouPoints: 11
-1,t,(V.1) The Outskirts
-12,r,(V.12) Ricksy Business
-14,r,(V.14) M. Night Shaym-Aliens!
-16,r,(V.16) Ricksy Business
-9,r,(V.9) Close Rick-counters
-12,t,(V.12) Pilot tlou
-5,r,(V.5) Rick Potion #9
-15,t,(V.15) Bus Depot
-19,t,(V.19) Bill's Town
-8,r,(V.8) Rixty Minutes
-10,t,(V.10) Pittsburgh
-11,r,(V.11) Lawnmower Dog
-27,t,(V.27) Bill's Town
-23,t,(V.23) Pittsburgh
-10,r,(V.10) Ricksy Business
-15,r,(V.15) Meeseeks and Destroy
-32,r,(V.32) M. Night Shaym-Aliens!
-29,r,(V.29) Close Rick-counters
-17,r,(V.17) Close Rick-counters
-18,r,(V.18) Anatomy Park
-19,r,(V.19) Meeseeks and Destroy
-20,r,(V.20) Ricksy Business
-9,t,(V.9) Tommy's Dam
-34,r,(V.34) Raising Gazorpazorp
-21,r,(V.21) Ricksy Business
-16,t,(V.16) The Suburbs
-34,t,(V.34) The Firefly Lab
-21,t,(V.21) The Firefly Lab
+rmPoints: 4, tlouPoints: 1
+1,r,(V.1) Lawnmower Dog
+4,r,(V.4) Ricksy Business
+10,t,(V.10) Bill's Town
+14,r,(V.14) Rixty Minutes
+17,r,(V.17) Pilot rm

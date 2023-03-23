@@ -118,6 +118,7 @@ public class Administrator extends Thread{
    public void run(){
         try {
             while (this.emulatorRunning) {
+           
             
 //            this.mutex.acquire();
             // try to return booster chapter
@@ -147,6 +148,7 @@ public class Administrator extends Thread{
             if (chapterTlou != null) {
                 chapterTlou.setCounter(0);
             }
+            this.updateAllUiQueues();
             this.mutex.release();
             Thread.sleep(500);
             this.mutex.acquire();
@@ -203,11 +205,19 @@ public class Administrator extends Thread{
     }
 
     private void addOneToCounterAndCheckIfPrivilegeRises(Queue queue) {
-        Node pointer = queue.getLast();
-        while (pointer != null) {
+      
+//        Node pointer = queue.getLast();   
+        int iterations = queue.getLength();
+        int index = 0;
+        
+        while (index < iterations) {
             // add 1 to the counter
-            Chapter chapter = pointer.getElement();
+           
+            Chapter chapter = queue.dispatch();
+            
+            
             chapter.setCounter(chapter.getCounter() + 1);
+//            System.out.println("Capitulo: " + chapter.getPcb().getCompleteId()+ " counter: " + chapter.getCounter());
 
             // if the counter is greater equal to 8 then move up priority
             if (chapter.getCounter() >= 8) {
@@ -215,13 +225,26 @@ public class Administrator extends Thread{
                 // if priority is greater than 1
                 if (pcb.getPriorityLevel() > 1) {
                     pcb.promotePriority();
-//                    pcb.setPriorityLevel(pcb.getPriorityLevel() - 1);
+                    if (chapter.getPcb().getStudioInitials().equals("rm")) {
+                        returnChapterToQueue(chapter, this.queueRm1, this.queueRm2, this.queueRm3);
+                    }
+                    else {
+                        returnChapterToQueue(chapter, this.queueTlou1, this.queueTlou2, this.queueTlou3);
+                    }
+                    
+//                    queue.dequeueByChapterId(chapter.getPcb().getCompleteId());
+                                  
+                } else {
+                    queue.enqueue(chapter);
                 }
-                chapter.setCounter(0);
+                chapter.setCounter(1);
+            } else {
+                queue.enqueue(chapter);
             }
-
-            pointer = pointer.getNext();
+//             pointer = pointer.getNext();
+            index++;
         }
+        
     }
 
     private void tryToReturnBoosterChapter(Queue booster, Queue queue1, Queue queue2, Queue queue3) {
