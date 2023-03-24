@@ -1,6 +1,2 @@
-rmPoints: 4, tlouPoints: 1
-1,r,(V.1) Lawnmower Dog
-4,r,(V.4) Ricksy Business
-10,t,(V.10) Bill's Town
-14,r,(V.14) Rixty Minutes
-17,r,(V.17) Pilot rm
+rmPoints: 0, tlouPoints: 1
+2,t,(V.2) The Suburbs

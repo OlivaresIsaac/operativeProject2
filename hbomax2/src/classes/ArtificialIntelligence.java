@@ -39,8 +39,8 @@ public class ArtificialIntelligence extends Thread {
     public ArtificialIntelligence() {
         this.administrator = Main.operativeSystem;
 
-//        int runTimeSeconds = 6 + 0 + 9 + 1 + 10;
-        int runTimeSeconds = 3;
+        int runTimeSeconds = 6 + 0 + 9 + 1 + 10;
+//        int runTimeSeconds = 3;
         this.runTime = runTimeSeconds * 1000;
         this.mutex = Main.mutex;
     }
@@ -50,6 +50,8 @@ public class ArtificialIntelligence extends Thread {
         try {
             // null safety check
             while (this.emulatorRunning) {
+                
+                long remainingTime = this.runTime;
 
                 this.mutex.acquire();
 
@@ -67,6 +69,7 @@ public class ArtificialIntelligence extends Thread {
                     tlouIndex += (rmIndex == tlouIndex) ? 1 : 0;
 
                     int spins = r.nextInt(31) + 10;
+                    long runTimeSpin = (long) (this.runTime * 0.3);
                     for (int i = 0; i < spins; i++) {
 
                         rmIndex = (rmIndex >= this.totalCharacters) ? 1 : rmIndex + 1;
@@ -75,8 +78,9 @@ public class ArtificialIntelligence extends Thread {
                         rmRing.setCharactericon(rmIndex);
                         tlouRing.setCharactericon(tlouIndex);
 
-                        Thread.sleep(100); //TODO
+                        Thread.sleep(runTimeSpin / spins); //TODO
                     }
+                    remainingTime = (long) (this.runTime * 0.7);
 
                     updateUiRing();
 
@@ -94,7 +98,7 @@ public class ArtificialIntelligence extends Thread {
                             winner = this.chapterTlou;
                             this.tlouRing.setWinner();
                         }
-                        Thread.sleep(4 * this.runTime / 7);
+                        Thread.sleep(4 * remainingTime / 7);
 
                         updateUiRing();
 
@@ -104,12 +108,12 @@ public class ArtificialIntelligence extends Thread {
                         rmRing.setCharactericon(rmIndex);
                         tlouRing.setCharactericon(rmIndex);
                         GlobalUI.getMainPage().setStatusLabel("Empate");
-                        Thread.sleep(4 * this.runTime / 7);
+                        Thread.sleep(4 * remainingTime / 7);
                         this.administrator.returnChaptersToQueue(this.chapterRm, this.chapterTlou);
                     } // send chapters to booster queue
                     else { // 33%
                         GlobalUI.getMainPage().setStatusLabel("Reforzar");
-                        Thread.sleep(4 * this.runTime / 7);
+                        Thread.sleep(4 * remainingTime / 7);
                         this.administrator.sendChaptersToBoosterQueue(this.chapterRm, this.chapterTlou);
                     }
                     
@@ -117,11 +121,11 @@ public class ArtificialIntelligence extends Thread {
                     
                 }
 
-                Thread.sleep(2 * this.runTime / 7);
+                Thread.sleep(3 * remainingTime / 7);
 
                 this.mutex.release();
 
-                Thread.sleep(this.runTime / 7);
+                Thread.sleep(100);
             }
 
         } catch (InterruptedException ex) {
