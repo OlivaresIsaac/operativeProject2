@@ -37,13 +37,12 @@ public class FunctionsTXT {
     public static Chapter[] loadWinners(String path, Chapter newWinner){
         Chapter[] winners = new Chapter[100];
         String data = loadTextFromFile(path);
-        System.out.println(data);
         String[] dataFragment = data.split("\n");
 
         
         for (int i = 1; i<dataFragment.length; i++){
             String[] chapterString = dataFragment[i].split(",");
-            System.out.println(chapterString[0]);
+        
             int id = Integer.parseInt(chapterString[0]);
            
             String studioInitials = (chapterString[1].equals("r")) ? "rm" : "tlou";

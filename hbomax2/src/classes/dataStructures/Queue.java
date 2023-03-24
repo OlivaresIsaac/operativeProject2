@@ -54,6 +54,38 @@ public class Queue {
         }
     }
     
+     public void dequeueByChapterId(String completeId) {
+        if (!isEmpty()) {
+            if (getLength() == 1) {
+                setFirst(null);
+                setLast(null);
+            } else {
+                Node pointer = getLast();
+                
+                if (pointer.getElement().getPcb().getCompleteId() == completeId) {
+                    setLast(pointer.getNext());
+                } else {
+                    while (pointer.getNext().getElement().getPcb().getCompleteId() != completeId) {
+                        pointer = pointer.getNext();
+                }
+                     if (pointer.getNext() == getFirst()) {
+                     setFirst(pointer);
+                } else {
+                      pointer.setNext(pointer.getNext().getNext());
+                }
+                
+                }
+
+                
+               
+              
+               
+            }
+
+            this.length--;
+        }
+    }
+    
     public Chapter dispatch(){
         Chapter element = process();
         dequeue();

@@ -1,5 +1,6 @@
-rmPoints: 3, tlouPoints: 1
-5,t,(V.5) Bill's Town
-7,r,(V.7) Ricksy Business
-12,r,(V.12) Something Ricked
-16,r,(V.16) Raising Gazorpazorp
+rmPoints: 4, tlouPoints: 1
+1,r,(V.1) Lawnmower Dog
+4,r,(V.4) Ricksy Business
+10,t,(V.10) Bill's Town
+14,r,(V.14) Rixty Minutes
+17,r,(V.17) Pilot rm
